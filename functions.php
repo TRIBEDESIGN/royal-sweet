@@ -26,6 +26,40 @@ wp_enqueue_style('my', get_template_directory_uri() . '/sass/style.css', array()
 }
 add_action('wp_enqueue_scripts', 'my_script_init');
 
+// イベントバナー（トップページ index.php の Swiper）
+function register_bnr_post_type() {
+    register_post_type('bnr', array(
+        'labels' => array(
+            'name'               => 'イベントバナー',
+            'singular_name'      => 'イベントバナー',
+            'menu_name'          => 'イベントバナー',
+            'add_new'            => '新規追加',
+            'add_new_item'       => 'バナーを追加',
+            'edit_item'          => 'バナーを編集',
+            'new_item'           => '新規バナー',
+            'view_item'          => 'バナーを表示',
+            'search_items'       => 'バナーを検索',
+            'not_found'          => 'バナーが見つかりません',
+            'not_found_in_trash' => 'ゴミ箱にバナーはありません',
+            'all_items'          => 'バナー一覧',
+        ),
+        'public'              => true,
+        'publicly_queryable'  => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'show_in_rest'        => true,
+        'menu_icon'           => 'dashicons-images-alt2',
+        'capability_type'     => 'post',
+        'hierarchical'        => false,
+        'supports'            => array('title'),
+        'has_archive'         => false,
+        'rewrite'             => false,
+        'query_var'           => false,
+        'exclude_from_search' => true,
+    ));
+}
+add_action('init', 'register_bnr_post_type');
+
 function admin_attend_manage_menu() {
 	add_menu_page( '出勤管理', '出勤管理' , 'administrator', 'attendance_manage', -1);
 }
