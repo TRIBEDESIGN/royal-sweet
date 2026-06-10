@@ -305,6 +305,22 @@ add_action('wp_footer', function() {
 }, 11);
 
 
+function royal_sweet_get_sns02_url( $user_id ) {
+    $handle = get_field( 'sns02', 'user_' . $user_id );
+    if ( empty( $handle ) ) {
+        return '';
+    }
+    $handle = trim( $handle );
+    if ( preg_match( '#^https?://#i', $handle ) ) {
+        return esc_url( $handle );
+    }
+    $handle = ltrim( $handle, '@' );
+    if ( $handle === '' ) {
+        return '';
+    }
+    return 'https://m-sns.net/profile/@' . rawurlencode( $handle );
+}
+
 //記事内の最初の画像を取得
 function catch_that_image() {
     global $post;

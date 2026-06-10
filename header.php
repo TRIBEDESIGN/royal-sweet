@@ -110,11 +110,6 @@
                   class="header-container__info--icon--img"
                   src="<?php echo get_template_directory_uri() ?>/img/livedoor.png" alt=""></a>
             </div>
-            <div class="header-container__info--icon">
-              <a href="https://twitter.com/RoyalSweet13" target="_blank" rel="noopener noreferrer"><img
-                  class="header-container__info--icon--img"
-                  src="<?php echo get_template_directory_uri() ?>/img/icon-twitter.png" alt=""></a>
-            </div>
           </div>
         </div>
       </div><!-- .header-container-content -->
@@ -141,12 +136,6 @@
                 <a href="http://royalsweet2021.livedoor.blog/" target="_blank" rel="noopener noreferrer">
                   <img
                     src="<?php echo get_template_directory_uri() ?>/img/livedoor.png" alt="livedoor">
-                </a>
-              </li>
-              <li>
-                <a href="https://twitter.com/RoyalSweet13" target="_blank" rel="noopener noreferrer">
-                  <img
-                    src="<?php echo get_template_directory_uri() ?>/img/icon-twitter.png" alt="twitter">
                 </a>
               </li>
             </ul>

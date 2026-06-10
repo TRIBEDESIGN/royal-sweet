@@ -38,10 +38,11 @@
                         <span><?= $girls->display_name ?>（<?php echo $girls->fage; ?>）</span><br>
                         <span>T:<?php echo $girls->staff_tall; ?></span>
                       </a>
-                      <?php if (!empty(get_field('twitter', 'user_' . $uid))) : ?>
+                      <?php $sns02_url = royal_sweet_get_sns02_url( $uid ); ?>
+                      <?php if ( $sns02_url ) : ?>
                         <div class="therapist-image__twitter">
-                          <a href="<?php the_field('twitter', 'user_' . $uid); ?>" target="_blank">
-                            <img src="<?php echo get_template_directory_uri() ?>/img/icon-x.png" alt="twitter icon">
+                          <a href="<?php echo esc_url( $sns02_url ); ?>" target="_blank" rel="noopener noreferrer">
+                            <img src="<?php echo get_template_directory_uri() ?>/assets/img/sns02-icon.png" alt="SNS 02">
                           </a>
                         </div>
                       <?php endif; ?>
