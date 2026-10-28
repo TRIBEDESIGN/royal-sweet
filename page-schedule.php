@@ -16,7 +16,7 @@
       <div class="inner">
         <div class="schedule-content__week gothic">
           <?php
-          $current_timestamp = current_time('timestamp');
+          $current_timestamp = tribe_schedule_timestamp();
           $week = ['日', '月', '火', '水', '木', '金', '土'];
 
           for ($i = 0; $i < 7; $i++) {
@@ -37,10 +37,10 @@
         <section class="schedule-content__day">
           <div class="schedule-therapists-wrap">
             <?php for ($k = 0; $k < 7; $k++): ?>
-              <?php $day = date('Y-m-d', strtotime('+' . $k . 'day', current_time('timestamp'))); ?>
+              <?php $day = date('Y-m-d', strtotime('+' . $k . 'day', tribe_schedule_timestamp())); ?>
               <div class="schedule-box schedule-box-<?php echo $k; ?>">
                 <h4 class="schedule-box__top">
-                  <?php echo date('n/j', strtotime('+' . $k . 'day', current_time('timestamp'))) . '(' . $week[date('w', strtotime('+' . $k . 'day', current_time('timestamp')))] . ')' . 'の出勤情報'; ?>
+                  <?php echo date('n/j', strtotime('+' . $k . 'day', tribe_schedule_timestamp())) . '(' . $week[date('w', strtotime('+' . $k . 'day', tribe_schedule_timestamp()))] . ')' . 'の出勤情報'; ?>
                 </h4>
 
                 <ul class="schedule-box__main">

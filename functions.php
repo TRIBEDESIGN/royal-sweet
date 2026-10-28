@@ -1,4 +1,12 @@
 <?php
+// 出勤表示に使う時刻（date() で日付にする）
+// 日本時間から4時間遅らせた時刻で、日本時間の4:00に次の日になる（タイムゾーンを時差で日付をずらす設定にしていた頃と同じ）
+// WordPressのタイムゾーンの設定に関係なく、同じ結果になる
+function tribe_schedule_timestamp()
+{
+  return time() + 5 * HOUR_IN_SECONDS;
+}
+
 
 function my_setup()
 {
