@@ -142,20 +142,58 @@ function my_pre_get_users($query) {
 add_action('pre_get_users', 'my_pre_get_users');
 
 
-function sortable_userlist() {
-  ?>
-<script src="js/jquery-ui.min.js"></script>
-<script src="js/sort-user.js"></script>
-<style>
-.ui-sortable-helper {
-  width: 100%;
-  white-space: nowrap;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+// ユーザー一覧の表示順を保存（旧 wp-admin/sort.php の置き換え）
+function tribe_save_user_priority()
+{
+  if (!current_user_can('list_users')) {
+    wp_die('権限がありません。', 403);
+  }
+  check_admin_referer('tribe_save_user_priority');
+
+  if (!empty($_POST['result']) && is_string($_POST['result'])) {
+    $ids = array_filter(array_map('intval', explode(',', wp_unslash($_POST['result']))));
+    $num = 1;
+    foreach ($ids as $user_id) {
+      update_user_meta($user_id, 'priority', $num);
+      $num++;
+    }
+  }
+
+  wp_safe_redirect(add_query_arg('tribe_sorted', '1', admin_url('users.php')));
+  exit;
 }
-</style>
-<?php
+add_action('admin_post_tribe_save_user_priority', 'tribe_save_user_priority');
+
+function tribe_user_sort_admin_notice()
+{
+  if (isset($_GET['tribe_sorted']) && $_GET['tribe_sorted'] === '1') {
+    echo '<div class="notice notice-success is-dismissible"><p>表示順を保存しました。</p></div>';
+  }
 }
-add_action("admin_print_footer_scripts-users.php", 'sortable_userlist');
+add_action('admin_notices', 'tribe_user_sort_admin_notice');
+
+// ユーザー一覧をドラッグで並べ替えられるようにする（WordPress標準の jQuery UI を使う）
+function sortable_userlist($hook)
+{
+  if ($hook !== 'users.php') {
+    return;
+  }
+  $script_path = get_template_directory() . '/js/sort-user.js';
+  wp_enqueue_script(
+    'tribe-sort-user',
+    get_template_directory_uri() . '/js/sort-user.js',
+    array('jquery', 'jquery-ui-sortable'),
+    file_exists($script_path) ? (string) filemtime($script_path) : '1.0.0',
+    true
+  );
+  wp_localize_script('tribe-sort-user', 'tribeSortUser', array(
+    'postUrl' => admin_url('admin-post.php'),
+    'action'  => 'tribe_save_user_priority',
+    'nonce'   => wp_create_nonce('tribe_save_user_priority'),
+  ));
+  wp_add_inline_style('admin-menu', '.ui-sortable-helper{width:100%;white-space:nowrap;box-shadow:0 0 8px rgba(0,0,0,.1);}');
+}
+add_action('admin_enqueue_scripts', 'sortable_userlist');
 
 //投稿画面のすぐに公開ボタンを非表示
 function hide_publishing_actions(){
