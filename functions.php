@@ -312,7 +312,6 @@ add_action( 'admin_footer-user-new.php', 'lastfirst_name' );
 add_action( 'admin_footer-user-edit.php', 'lastfirst_name' );
 add_action( 'admin_footer-profile.php', 'lastfirst_name' );
 
-add_action( 'admin_print_scripts-profile.php', 'my_custom_order' );
 
 //remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
 
